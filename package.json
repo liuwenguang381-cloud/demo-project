@@ -1,7 +1,7 @@
 {
   "name": "demo-project",
   "version": "1.0.0",
-  "description": "A small Node.js service with routing, tests, CI, and Docker support",
+  "description": "A production-style Node.js service with routing, validation, logging, tests, CI, and Docker support",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -10,6 +10,9 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
   },
   "license": "MIT"
 }
