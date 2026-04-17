@@ -1,10 +1,19 @@
 # demo-project
 
-A minimal but structured Node.js HTTP service.
+A small Node.js service with structured routing, automated tests, GitHub Actions, and Docker support.
+
+## Features
+
+- `src/` based project structure
+- Plain Node.js HTTP server with no external runtime dependencies
+- JSON API endpoints
+- Automated tests with `node:test`
+- GitHub Actions CI workflow
+- Docker support
 
 ## Requirements
 
-- Node.js
+- Node.js 20+
 - npm
 
 ## Install
@@ -13,7 +22,7 @@ A minimal but structured Node.js HTTP service.
 npm install
 ```
 
-## Run
+## Run locally
 
 ```bash
 npm start
@@ -23,6 +32,48 @@ After the server starts, you should see:
 
 ```text
 Server running at http://localhost:3000
+```
+
+## Run tests
+
+```bash
+npm test
+```
+
+## Docker
+
+Build the image:
+
+```bash
+docker build -t demo-project .
+```
+
+Run the container:
+
+```bash
+docker run -p 3000:3000 demo-project
+```
+
+## Project structure
+
+```text
+.
+├── .github/workflows/ci.yml
+├── Dockerfile
+├── index.js
+├── package.json
+├── src
+│   ├── app.js
+│   ├── server.js
+│   ├── routes
+│   │   ├── echo.js
+│   │   ├── health.js
+│   │   ├── info.js
+│   │   └── root.js
+│   └── utils
+│       └── response.js
+└── tests
+    └── app.test.js
 ```
 
 ## Endpoints
@@ -49,7 +100,7 @@ Returns service health information:
 
 ### `GET /api/info`
 
-Returns basic service metadata:
+Returns service metadata:
 
 ```json
 {
@@ -61,7 +112,7 @@ Returns basic service metadata:
 
 ### `GET /api/echo?message=hello`
 
-Echoes the provided query parameter:
+Echoes the query string parameter:
 
 ```json
 {
@@ -73,7 +124,7 @@ Echoes the provided query parameter:
 
 ### Unknown routes
 
-Unknown routes now return a JSON 404 response:
+Unknown routes return a JSON 404 response:
 
 ```json
 {
