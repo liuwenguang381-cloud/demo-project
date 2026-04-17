@@ -4,6 +4,7 @@ const { handleRoot } = require('./routes/root');
 const { handleHealth } = require('./routes/health');
 const { handleInfo } = require('./routes/info');
 const { handleEcho } = require('./routes/echo');
+const { withErrorHandling, attachRequestLogging } = require('./middleware');
 
 function methodNotAllowed(res, allowedMethods) {
   sendJson(res, 405, {
@@ -21,7 +22,9 @@ function notFound(res, pathname, method) {
 }
 
 function createApp() {
-  return function app(req, res) {
+  return withErrorHandling(async function app(req, res) {
+    attachRequestLogging(req, res);
+
     const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
     const { pathname } = url;
     const method = req.method || 'GET';
@@ -63,7 +66,7 @@ function createApp() {
     }
 
     notFound(res, pathname, method);
-  };
+  });
 }
 
 module.exports = {
